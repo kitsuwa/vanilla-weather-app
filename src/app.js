@@ -32,6 +32,7 @@ function displayTemperature(response) {
   let iconElement = document.querySelector("#icon");
 
   celsiusTemperature = response.data.main.temp;
+  kilometersSpeed = response.data.wind.speed;
 
   temperatureElement.innerHTML = Math.round(response.data.main.temp);
   cityElement.innerHTML = response.data.name;
@@ -61,7 +62,6 @@ function handleSubmit(event) {
 function displayFahrenheitTemperature(event) {
   event.preventDefault();
   let temperatureElement = document.querySelector("#temperature");
-  // remove the active class on the celsius link
   celsiusLink.classList.remove("active");
   fahrenheitLink.classList.add("active");
   let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
@@ -76,7 +76,26 @@ function displayCelsiusTemperature(event) {
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
 
+function displayMilesSpeed(event) {
+  event.preventDefault();
+  let windElement = document.querySelector("#wind");
+  kilometersLink.classList.remove("active");
+  milesLink.classList.add("active");
+  let milesSpeed = Math.round(kilometersSpeed / 1.609);
+  windElement.innerHTML = milesSpeed;
+}
+
+function displayKilometersSpeed(event) {
+  event.preventDefault();
+  kilometersLink.classList.add("active");
+  milesLink.classList.remove("active");
+  let windElement = document.querySelector("#wind");
+  windElement.innerHTML = Math.round(kilometersSpeed);
+}
+
 let celsiusTemperature = null;
+
+let kilometersSpeed = null;
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
@@ -86,3 +105,9 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
+
+let milesLink = document.querySelector("#miles-link");
+milesLink.addEventListener("click", displayMilesSpeed);
+
+let kilometersLink = document.querySelector("#kilometers-link");
+kilometersLink.addEventListener("click", displayKilometersSpeed);

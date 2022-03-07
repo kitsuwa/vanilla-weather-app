@@ -21,6 +21,34 @@ function formatDate(timestamp) {
   return `${day}, ${hours}:${minutes}`;
 }
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class="row">`;
+  let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `           
+              <div class="col-2">
+                <div class="weather-forecast-day">${day}</div>
+                <img
+                  src="https://cdn.iconscout.com/icon/premium/png-256-thumb/no-image-2840213-2359555.png"
+                  alt=""
+                  width="42"
+                />
+                <div class="weather-forecast-temperatures">
+                  <span class="weather-forecast-temperature-max">18</span>°
+                  <span class="weather-forecast-temperature-min">12</span>°
+                </div>
+              </div>
+              `;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function displayTemperature(response) {
   console.log(response.data);
   let temperatureElement = document.querySelector("#temperature");
@@ -111,3 +139,5 @@ milesLink.addEventListener("click", displayMilesSpeed);
 
 let kilometersLink = document.querySelector("#kilometers-link");
 kilometersLink.addEventListener("click", displayKilometersSpeed);
+
+displayForecast();

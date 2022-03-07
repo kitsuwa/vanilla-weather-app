@@ -41,7 +41,10 @@
           <div class="weather-overview">
             <h1 id="city"></h1>
             <ul>
-              <li><small>Last updated: </small><span id="date"></span></li>
+              <li>
+                <small>Last updated (in local time): </small
+                ><span id="date"></span>
+              </li>
               <li id="description"></li>
             </ul>
           </div>
@@ -57,8 +60,8 @@
                 <span class="float-left">
                   <strong id="temperature"></strong>
                   <span class="units">
-                    <a href="#" id="celsius-link" class="active">°C</a> |
-                    <a href="#" id="fahrenheit-link">°F</a></span
+                    <a href="#" id="fahrenheit-link" class="active">°F</a> |
+                    <a href="#" id="celsius-link">°C</a></span
                   >
                 </span>
               </div>
@@ -68,8 +71,8 @@
                 <li>Humidity: <span id="humidity"></span>%</li>
                 <li>
                   Wind: <span id="wind"></span>
-                  <a href="#" id="kilometers-link" class="active">km/h</a> |
-                  <a href="#" id="miles-link">mph</a>
+                  <a href="#" id="miles-link" class="active">mph</a> |
+                  <a href="#" id="kilometers-link">km/h</a>
                 </li>
               </ul>
             </div>

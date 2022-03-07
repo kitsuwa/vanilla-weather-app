@@ -18,7 +18,7 @@ function formatDate(timestamp) {
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
-  return `${day}, ${hours}:${minutes}`;
+  return `${day} ${hours}:${minutes}`;
 }
 
 function formatForecastDay(timestamp) {
@@ -52,10 +52,10 @@ function displayForecast(response) {
                 <div class="weather-forecast-temperatures">
                   <span class="weather-forecast-temperature-max">${Math.round(
                     forecastDay.temp.max
-                  )}</span>°
+                  )}</span>°F | 
                   <span class="weather-forecast-temperature-min">${Math.round(
                     forecastDay.temp.min
-                  )}</span>°
+                  )}</span>°F
                 </div>
               </div>
               `;
@@ -68,7 +68,8 @@ function displayForecast(response) {
 
 function getForecast(coordinates) {
   let apiKey = "b6a37e0dd805d5da5a0b7740137a95f2";
-  let apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  let units = "imperial";
+  let apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=${units}`;
   axios.get(apiURL).then(displayForecast);
 }
 
@@ -81,8 +82,8 @@ function displayTemperature(response) {
   let dateElement = document.querySelector("#date");
   let iconElement = document.querySelector("#icon");
 
-  celsiusTemperature = response.data.main.temp;
-  kilometersSpeed = response.data.wind.speed;
+  fahreinheitTemperature = response.data.main.temp;
+  milesSpeed = response.data.wind.speed;
 
   temperatureElement.innerHTML = Math.round(response.data.main.temp);
   cityElement.innerHTML = response.data.name;
@@ -101,7 +102,8 @@ function displayTemperature(response) {
 
 function search(city) {
   let apiKey = "b6a37e0dd805d5da5a0b7740137a95f2";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${apiKey}&units=metric`;
+  let units = "imperial";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(displayTemperature);
 }
 
@@ -111,43 +113,43 @@ function handleSubmit(event) {
   search(cityInputElement.value);
 }
 
-function displayFahrenheitTemperature(event) {
-  event.preventDefault();
-  let temperatureElement = document.querySelector("#temperature");
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
-  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
-  temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
-}
-
 function displayCelsiusTemperature(event) {
   event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
-  let temperatureElement = document.querySelector("#temperature");
+  let celsiusTemperature = ((fahreinheitTemperature - 32) * 5) / 9;
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
 
-function displayMilesSpeed(event) {
+function displayFahrenheitTemperature(event) {
   event.preventDefault();
-  let windElement = document.querySelector("#wind");
-  kilometersLink.classList.remove("active");
-  milesLink.classList.add("active");
-  let milesSpeed = Math.round(kilometersSpeed / 1.609);
-  windElement.innerHTML = milesSpeed;
+  fahrenheitLink.classList.add("active");
+  celsiusLink.classList.remove("active");
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(fahreinheitTemperature);
 }
 
 function displayKilometersSpeed(event) {
   event.preventDefault();
+  let windElement = document.querySelector("#wind");
   kilometersLink.classList.add("active");
   milesLink.classList.remove("active");
-  let windElement = document.querySelector("#wind");
-  windElement.innerHTML = Math.round(kilometersSpeed);
+  let kilometersSpeed = Math.round(milesSpeed * 1.609);
+  windElement.innerHTML = kilometersSpeed;
 }
 
-let celsiusTemperature = null;
+function displayMilesSpeed(event) {
+  event.preventDefault();
+  milesLink.classList.add("active");
+  kilometersLink.classList.remove("active");
+  let windElement = document.querySelector("#wind");
+  windElement.innerHTML = Math.round(milesSpeed);
+}
 
-let kilometersSpeed = null;
+let fahreinheitTemperature = null;
+
+let milesSpeed = null;
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);

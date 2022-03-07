@@ -93,8 +93,12 @@ a {
   opacity: 0.5;
 }
 
+.weather-forecast-temperature-max {
+  color: #dc143c;
+}
+
 .weather-forecast-temperature-min {
-  opacity: 0.5;
+  color: #4169e1;
 }
 
 .weather-forecast-temperatures {
